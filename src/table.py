@@ -11,6 +11,7 @@ class Table:
         MINMAX = 2
 
     quantile_values: list[float] = [.1, .25, .5, .75, .9]
+    min_max_keys: list[str] = ["Rows number", "NaN rows", "Min value", "Mean value", "Max value"]
 
     def __init__(self, name: str, df: pd.DataFrame):
         if name == '':
@@ -21,11 +22,11 @@ class Table:
     def __str__(self):
         return self.__name
 
-    def get_quantiles(self, column: str):
+    def get_quantiles_or_unique(self, column: str):
         """
-        Get percentiles of values in specified column
+        Get percentiles of values in specified column or its unique values
         :param column:
-        :return: None if not numeric. If numeric data in column then return Series
+        :return: Unique values if not numeric. If numeric data in column then return Series
         """
         if self.__df[column].dtype.kind not in 'biufc':
             unique = self.__df[column].value_counts()
@@ -42,12 +43,12 @@ class Table:
         :param column: string name
         :return: dictionary
         """
-        result = {"Rows number": self.__df[column].shape[0],
-                  "NaN rows": self.__df[column].isna().sum()}
+        result = {self.min_max_keys[0]: self.__df[column].shape[0],
+                  self.min_max_keys[1]: self.__df[column].isna().sum()}
         if self.__df[column].dtype.kind in 'biufc':
-            result.update({"Min value": self.__df[column].min(),
-                           "Mean value": self.__df[column].mean(),
-                           "Max value": self.__df[column].max()})
+            result.update({self.min_max_keys[2]: self.__df[column].min(),
+                           self.min_max_keys[3]: self.__df[column].mean(),
+                           self.min_max_keys[4]: self.__df[column].max()})
         return result
 
     def get_data(self, column: str, dt: DataType):
@@ -58,7 +59,7 @@ class Table:
         :return: Data dictionary
         """
         if dt == Table.DataType.QUANTILES:
-            return self.get_quantiles(column)
+            return self.get_quantiles_or_unique(column)
         elif dt == Table.DataType.MINMAX:
             return self.get_min_mean_max(column)
 

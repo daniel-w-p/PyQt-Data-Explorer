@@ -13,12 +13,16 @@ class Content:
     __content: list[Table] = []
 
     @classmethod
-    def set_content(cls, tables: [Table]):
+    def set(cls, tables: [Table]):
         cls.__content = tables
 
     @classmethod
-    def get_content(cls) -> [Table]:
+    def get(cls) -> [Table]:
         return cls.__content
+
+    @classmethod
+    def clear(cls):
+        cls.__content = []
 
     @classmethod
     def get_content_as_generator(cls):
@@ -34,6 +38,8 @@ class Content:
 
     @classmethod
     def get_first(cls) -> Table:
+        if cls.get_content_len() == 0:
+            raise ValueError('Content is not set!')
         return cls.__content[0]
 
     @classmethod
