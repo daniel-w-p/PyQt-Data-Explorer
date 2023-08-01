@@ -10,7 +10,7 @@ class Content:
     """
     This class is responsible for storing data and populating widgets with it.
     """
-    __content = []
+    __content: list[Table] = []
 
     @classmethod
     def set_content(cls, tables: [Table]):

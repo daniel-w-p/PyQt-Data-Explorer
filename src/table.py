@@ -10,11 +10,13 @@ class Table:
         QUANTILES = 1
         MINMAX = 2
 
-    quantile_values = [.1, .25, .5, .75, .9]
+    quantile_values: list[float] = [.1, .25, .5, .75, .9]
 
     def __init__(self, name: str, df: pd.DataFrame):
-        self.__name = name
-        self.__df = df
+        if name == '':
+            raise ValueError('Name can not be empty')
+        self.__name: str = name
+        self.__df: pd.DataFrame = df
 
     def __str__(self):
         return self.__name
@@ -69,10 +71,6 @@ class Table:
 
     @property
     def name(self) -> str:
-        return self.__name
-
-    @property
-    def widget(self) -> str:
         return self.__name
 
     @property

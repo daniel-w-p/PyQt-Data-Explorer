@@ -60,7 +60,7 @@ class PostgresWorker:
         :return: True if exists False if not
         """
         if not sv.is_valid_dbname(database):
-            raise 'Database name is not valid! Allowed characters are: 0-9 a-Z and _'
+            raise RuntimeWarning('Database name is not valid! Allowed characters are: 0-9 a-Z and _')
         if cls.__engine is not None:
 
             with cls.__engine.connect() as conn:
