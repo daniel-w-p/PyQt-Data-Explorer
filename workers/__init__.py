@@ -1,3 +1,3 @@
-from .fileWorker import FileWorker
-from .liteWorker import LiteWorker
-from .postgreWorker import PostgresWorker
+from .file_worker import FileWorker
+from .lite_worker import LiteWorker
+from .postgres_worker import PostgresWorker
