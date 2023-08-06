@@ -47,9 +47,9 @@ class Engine:
             result = FileWorker.save_to_csv(Content.get_table_by_name(
                 self.w_tables_list.widget.currentItem().text()), kwargs['filename'])
         elif ds_type == self.DSType.XLSX_FILE:
-            result = FileWorker.save_many_to_xlsx(Content.get_content(), kwargs['filename'])
+            result = FileWorker.save_many_to_xlsx(Content.get(), kwargs['filename'])
         elif ds_type == self.DSType.LITE_DB:
-            result = LiteWorker.export_to_sql(Content.get_content(), kwargs['filename'])
+            result = LiteWorker.export_to_sql(Content.get(), kwargs['filename'])
         elif ds_type == self.DSType.POSTGRES_DB:
             result = True
             # Not connect nor credentials successfully use
@@ -61,7 +61,7 @@ class Engine:
                                                         database=kwargs['database'])
 
             if result:
-                PostgresWorker.export_to_sql(Content.get_content())
+                PostgresWorker.export_to_sql(Content.get())
             else:
                 raise RuntimeWarning("Something went wrong when connecting database!")
         else:
@@ -101,7 +101,7 @@ class Engine:
         else:
             raise RuntimeError("Not implemented yet!")
 
-        Content.set_content(data)
+        Content.set(data)
         self.s_data_loaded.emit(True)
 
     @staticmethod
