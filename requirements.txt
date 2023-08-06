@@ -3,6 +3,8 @@ pandas==2.0.3
 PyQt6==6.4.2
 PyQt6_sip==13.5.1
 pyqtgraph==0.13.3
+psycopg2==2.9.6
 SQLAlchemy==2.0.19
+openpyxl ==3.1.2
 
 pytest~=7.4.0
